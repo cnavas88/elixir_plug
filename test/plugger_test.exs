@@ -20,6 +20,18 @@ defmodule ElixirPlugTest do
     assert conn.resp_body == "Hello world"
   end
 
+  test "returns error 404 in api plug" do
+    # Create a test connection
+    conn = conn(:get, "/api/test")
+
+    # Invoke the plug
+    conn = Router.call(conn, @opts)
+
+    # Assert the response and status
+    assert conn.state == :sent
+    assert conn.status == 404
+  end
+
   test "returns some metrics" do
     # Create a test connection
     conn = conn(:get, "/metrics")
@@ -45,6 +57,43 @@ defmodule ElixirPlugTest do
     # Assert the response and status
     assert conn.state == :sent
     assert conn.status == 404
+  end
+
+  test "responds pong" do
+    # Create a test connection
+    conn = conn(:get, "/ping")
+
+    # Invoke the plug
+    conn = Router.call(conn, @opts)
+
+    # Assert the response and status
+    assert conn.state == :sent
+    assert conn.status == 200
+    assert conn.resp_body == "pong"
+  end
+
+  test "responds flunk error" do
+    # Create a test connection
+    conn = conn(:get, "/flunk")
+
+    # Invoke the plug
+    conn = Router.call(conn, @opts)
+
+    # Assert the response and status
+    assert conn.state == :sent
+    assert conn.status == 500
+  end
+
+  test "responds with version commit" do
+    # Create a test connection
+    conn = conn(:get, "/version")
+
+    # Invoke the plug
+    conn = Router.call(conn, @opts)
+
+    # Assert the response and status
+    assert conn.state == :sent
+    assert conn.status == 200
   end
 
   test "start code does not crash" do
