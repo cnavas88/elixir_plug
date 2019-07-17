@@ -15,30 +15,30 @@ defmodule ElixirPlug.Metrics.Hackney do
 
   def increment_counter([:hackney, host, :nb_requests]) do
     spec = [name: :nb_requests, labels: [host]]
-    unwrap(Metrics.gauge_inc(spec))
+    Metrics.gauge_inc(spec)
   end
 
   def increment_counter([:hackney, :total_requests]), do:
-    unwrap(Metrics.inc(:total_requests))
+    Metrics.inc(:total_requests)
 
   def increment_counter([:hackney, :finished_requests]), do:
-    unwrap(Metrics.inc(:finished_requests))
+    Metrics.inc(:finished_requests)
 
   def increment_counter([:hackney_pool, host, :new_connection]), do:
-    unwrap(Metrics.inc(:new_connection, [labels: [host]]))
+    Metrics.inc(:new_connection, [labels: [host]])
 
   def increment_counter([:hackney_pool, host, :reuse_connection]), do:
-    unwrap(Metrics.inc(:reuse_connection, [labels: [host]]))
+    Metrics.inc(:reuse_connection, [labels: [host]])
 
   def increment_counter([:hackney_pool, pool, :no_socket]), do:
-    unwrap(Metrics.inc(:no_socket, [labels: [pool]]))
+    Metrics.inc(:no_socket, [labels: [pool]])
 
   def increment_counter([:hackney, host, :connect_error]), do:
-    unwrap(Metrics.inc(:connect_error, [labels: [host]]))
+    Metrics.inc(:connect_error, [labels: [host]])
 
   def increment_counter([:hackney, :nb_requests]) do
     spec = [name: :nb_requests, labels: ["totals"]]
-    unwrap(Metrics.gauge_inc(spec))
+    Metrics.gauge_inc(spec)
   end
 
   def increment_counter(_arg), do: :ok
@@ -49,12 +49,12 @@ defmodule ElixirPlug.Metrics.Hackney do
 
   def decrement_counter([:hackney, host, :nb_requests]) do
     spec = [name: :nb_requests, labels: [host]]
-    unwrap(Metrics.gauge_dec(spec))
+    Metrics.gauge_dec(spec)
   end
 
   def decrement_counter([:hackney, :nb_requests]) do
     spec = [name: :nb_requests, labels: ["totals"]]
-    unwrap(Metrics.gauge_dec(spec))
+    Metrics.gauge_dec(spec)
   end
 
   def decrement_counter(_arg, _arg2), do: :ok
@@ -63,17 +63,17 @@ defmodule ElixirPlug.Metrics.Hackney do
 
   def update_histogram([:hackney, host, :request_time], value) do
     spec = [name: :request_time, labels: [host]]
-    unwrap(Metrics.histogram_observe(spec, value))
+    Metrics.histogram_observe(spec, value)
   end
 
   def update_histogram([:hackney_pool, pool, :in_use_count], value) do
     spec = [name: :in_use_count, labels: [pool]]
-    unwrap(Metrics.histogram_observe(spec, value))
+    Metrics.histogram_observe(spec, value)
   end
 
   def update_histogram([:hackney_pool, pool, :free_count], value) do
     spec = [name: :free_count, labels: [pool]]
-    unwrap(Metrics.histogram_observe(spec, value))
+    Metrics.histogram_observe(spec, value)
   end
 
   def update_histogram(_arg, _arg2), do: :ok
@@ -89,12 +89,5 @@ defmodule ElixirPlug.Metrics.Hackney do
   def decrement_spiral(_arg), do: :ok
 
   def decrement_spiral(_arg, _arg2), do: :ok
-
-  #######################
-  # Auxiliary functions #
-  #######################
-
-  defp unwrap({:ok, _val}), do: :ok
-  defp unwrap(error), do: error
 
 end

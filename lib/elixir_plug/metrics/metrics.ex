@@ -84,7 +84,8 @@ defmodule ElixirPlug.Metrics do
 
   @spec inc(atom, keyword) :: :ok
 
-  def inc(key, [labels: labels]) do
+  def inc(key, opts \\ [labels: []]) do
+    labels = Keyword.get(opts, :labels)
     Counter.inc([name: key, labels: labels])
   rescue
     InvalidValueError        ->  {:error, :invalid_value}

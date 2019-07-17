@@ -6,7 +6,6 @@ defmodule ElixirPlug.Web.ApiRouter do
   use Plug.Router
 
   alias ElixirPlug.Web.Controllers, as: C
-  # alias ElixirPlug.Web.Plugs.ValidateSignature
 
   # Use plug logger for logging request information
   plug(Plug.Logger)
@@ -14,9 +13,7 @@ defmodule ElixirPlug.Web.ApiRouter do
   plug(:match)
   plug(:dispatch)
 
-  # plug ValidateSignature
-
-  get "/example",  do: C.ExampleController.run(conn)
+  get "/hello_world",  do: C.HelloWorldController.run(conn)
 
   match _ do
     send_resp(conn, 404, "oops.. Nothing here :(")
