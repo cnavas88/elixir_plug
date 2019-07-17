@@ -14,8 +14,7 @@ defmodule ElixirPlug.MixProject do
         "coveralls.post": :test,
         "coveralls.html": :test
       ],
-      deps: deps(),
-      aliases: [test: ["test", "credo --strict"]]
+      deps: deps()
     ]
   end
 
