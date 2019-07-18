@@ -5,8 +5,8 @@ defmodule ElixirPlug.Web.ApiRouter do
   use Plug.Router
 
   alias ElixirPlug.Web.Controllers, as: C
-  alias ElixirPlug.Web.Schemas.{HelloWorld}
   alias ElixirPlug.Web.Plugs.ErrorHelpers
+  alias ElixirPlug.Web.Schemas.{HelloWorld}
 
   # Use plug logger for logging request information
   plug(Plug.Logger)
