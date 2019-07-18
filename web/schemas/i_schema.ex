@@ -1,4 +1,4 @@
-defmodule ElixirPlug.Web.Controllers.ISchema do
+defmodule ElixirPlug.Web.Schemas.ISchema do
   @moduledoc """
   Interface for web Schemas validation
   """
