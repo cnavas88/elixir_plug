@@ -5,8 +5,11 @@ defmodule ElixirPlug.Web.Controllers.VersionController do
   """
   import Plug.Conn
 
-  @spec run(%Plug.Conn{}) :: %Plug.Conn{}
+  alias ElixirPlug.Web.Controllers.IController
 
+  @behaviour IController
+
+  @impl IController
   def run(conn) do
     conn
     |> put_resp_header("content-type", "text/plain")

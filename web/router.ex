@@ -17,8 +17,7 @@ defmodule ElixirPlug.Web.Router do
 
   forward "/api", to: ElixirPlug.Web.ApiRouter
 
-  get "/flunk",   do: C.PingController.flunk(conn)
-  get "/ping",    do: C.PingController.ping(conn)
+  get "/ping",    do: C.PingController.run(conn)
   get "/version", do: C.VersionController.run(conn)
 
   match _ do

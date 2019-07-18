@@ -92,18 +92,6 @@ defmodule ElixirPlugTest do
     assert conn.resp_body == "Pong"
   end
 
-  test "responds flunk error" do
-    # Create a test connection
-    conn = conn(:get, "/flunk")
-
-    # Invoke the plug
-    conn = Router.call(conn, @opts)
-
-    # Assert the response and status
-    assert conn.state == :sent
-    assert conn.status == 500
-  end
-
   test "responds with version commit" do
     # Create a test connection
     conn = conn(:get, "/version")
