@@ -10,6 +10,6 @@ defmodule ElixirPlug.Web.Schemas.HelloWorld do
     }
   }
 
-  def get_schema(), do: @schema
+  def get_schema, do: @schema
 
 end
