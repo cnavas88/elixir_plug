@@ -2,7 +2,7 @@ defmodule ElixirPlug.Web.Schemas.HelloWorld do
   @moduledoc """
   Schema for /api/hello_world
   """
-  alias ElixirPlug.Web.Controllers.ISchema
+  alias ElixirPlug.Web.Schemas.ISchema
 
   @behaviour ISchema
 
