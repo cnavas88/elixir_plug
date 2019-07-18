@@ -1,15 +1,30 @@
-alias ElixirPlug.Web.Router
-
 defmodule ElixirPlugTest do
   @moduledoc false
   use ExUnit.Case
   use Plug.Test
 
+  alias ElixirPlug.Web.Router
+  alias ElixirPlug.Web.Schemas.HelloWorld, as: HelloWorldSchema
+
   @opts Router.init([])
 
-  test "returns hello world" do
+  test "Returns error in hello world without parameters" do
     # Create a test connection
     conn = conn(:get, "/api/hello_world")
+
+    # Invoke the plug
+    conn = Router.call(conn, @opts)
+
+    decode_body = Jason.decode!(conn.resp_body)
+    # Assert the response and status
+    assert conn.state == :sent
+    assert conn.status == 400
+    assert decode_body["error"] == "name is required"
+  end
+
+  test "Returns hello world with name" do
+    # Create a test connection
+    conn = conn(:get, "/api/hello_world?name=Carlos")
 
     # Invoke the plug
     conn = Router.call(conn, @opts)
@@ -17,7 +32,12 @@ defmodule ElixirPlugTest do
     # Assert the response and status
     assert conn.state == :sent
     assert conn.status == 200
-    assert conn.resp_body == "Hello world"
+    assert conn.resp_body == "Hello world Carlos"
+  end
+
+  test "Get Hello world Schema" do
+    result = HelloWorldSchema.get_schema()
+    assert is_map(result)
   end
 
   test "returns error 404 in api plug" do
@@ -69,7 +89,7 @@ defmodule ElixirPlugTest do
     # Assert the response and status
     assert conn.state == :sent
     assert conn.status == 200
-    assert conn.resp_body == "pong"
+    assert conn.resp_body == "Pong"
   end
 
   test "responds flunk error" do

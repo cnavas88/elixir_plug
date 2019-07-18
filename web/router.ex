@@ -18,7 +18,6 @@ defmodule ElixirPlug.Web.Router do
   forward "/api", to: ElixirPlug.Web.ApiRouter
 
   get "/flunk",   do: C.PingController.flunk(conn)
-  # get "/metrics", do: PrometheusExporter.metrics(conn)
   get "/ping",    do: C.PingController.ping(conn)
   get "/version", do: C.VersionController.run(conn)
 
