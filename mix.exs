@@ -35,6 +35,7 @@ defmodule ElixirPlug.MixProject do
       {:distillery,       "~> 2.0"},
       {:excoveralls,      "~> 0.11.1", only: :test},
       {:jason,            "~> 1.1.2"},
+      {:litmus,           "~> 1.0.0"},
       {:mix_test_watch,   "~> 0.8", only: [:dev, :test], runtime: false},
       {:plug_cowboy,      "~> 2.0"},
       {:plug,             "~> 1.0"},
