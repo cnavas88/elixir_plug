@@ -4,8 +4,11 @@ defmodule ElixirPlug.Web.Controllers.HelloWorldController do
   """
   import Plug.Conn
 
-  @spec run(%Plug.Conn{}) :: %Plug.Conn{}
+  alias ElixirPlug.Web.Controllers.IController
 
+  @behaviour IController
+
+  @impl IController
   def run(conn) do
     params = URI.decode_query(conn.query_string)
 

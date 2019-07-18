@@ -5,19 +5,15 @@ defmodule ElixirPlug.Web.Controllers.PingController do
   """
   import Plug.Conn
 
-  @spec ping(%Plug.Conn{}) :: %Plug.Conn{}
+  alias ElixirPlug.Web.Controllers.IController
 
-  def ping(conn) do
+  @behaviour IController
+
+  @impl IController
+  def run(conn) do
     conn
     |> put_resp_header("content-type", "text/plain")
     |> send_resp(200, "Pong")
   end
 
-  @spec flunk(%Plug.Conn{}) :: %Plug.Conn{}
-
-  def flunk(conn) do
-    conn
-    |> put_resp_header("content-type", "text/plain")
-    |> send_resp(500, "Booom!!")
-  end
 end
