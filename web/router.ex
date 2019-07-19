@@ -2,7 +2,6 @@ defmodule ElixirPlug.Web.Router do
   @moduledoc """
   ElixirPlug router where we configure the all routes or middlewares.
   """
-
   use Plug.Router
 
   alias ElixirPlug.Web.Controllers, as: C

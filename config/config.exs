@@ -2,6 +2,8 @@
 # and its dependencies with the aid of the Mix.Config module.
 use Mix.Config
 
+config :elixir_plug, tmp_path: Path.absname("tmp")
+
 config :logger, :console,
   format: "$date $time $metadata[$level] $message\n",
   metadata: [:request_id]

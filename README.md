@@ -9,3 +9,14 @@ Follow [these instructions](https://gist.github.com/rubencaro/6a28138a40e629b064
 ## Development
 
 Run `./watch.sh` to run tests anytime a file is changed. See `rerun.sh` for tweakings.
+
+# Harakiri functions
+
+We can execute some function with harakiri:
+
+- restart: This function does a restart the elixir program. Use: 
+```touch PROJECT_ROUTE/tmp/restart```
+
+- logger_level: This function changes the level of logger application. The 
+options are: info, debug, error, warn. Use:
+```echo "OPTION" PROJECT_ROUTE/tmp/loggerl_level```
