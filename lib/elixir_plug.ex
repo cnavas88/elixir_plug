@@ -32,6 +32,7 @@ defmodule ElixirPlug do
     })
 
     children = [
+      Bidtor.EtsHolder.Supervisor,
       Cowboy.child_spec(
         scheme: :http,
         plug: Router,
