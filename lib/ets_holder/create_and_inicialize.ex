@@ -5,12 +5,20 @@ defmodule Bidtor.EtsHolder.CreateAndInicialize do
   """
   use GenServer
 
-  def start_link(opts \\ []) do
-    GenServer.start_link(__MODULE__, opts, name: :create_and_inicialize_worker)
+  def start_link({name, module}) do
+    GenServer.start_link(
+      __MODULE__,
+      [name: name, module: module],
+      name: name
+    )
   end
 
-  def init(_) do
-    IO.puts "CREATE AND INICIALIZE THE ETS TABLES"
+  def init(opts) do
+    create_ets_table(opts)
     {:ok, nil}
+  end
+
+  defp create_ets_table(opts) do
+    :ets.new(opts[:name], [:public, :named_table, :set])
   end
 end
