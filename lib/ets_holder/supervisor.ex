@@ -20,9 +20,9 @@ defmodule ElixirPlug.EtsHolder.Supervisor do
   defp generate_childs(ets_conf) do
     Enum.map(ets_conf, fn config ->
       worker(
-        Bidtor.EtsHolder.CreateAndInicialize,
+        ElixirPlug.EtsHolder.Worker,
         [config],
-        [restart: :permanent, id: elem(config, 0)]
+        [restart: :permanent, id: config.name]
       )
     end)
   end

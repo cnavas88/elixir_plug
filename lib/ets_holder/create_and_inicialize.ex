@@ -1,24 +1,33 @@
-defmodule Bidtor.EtsHolder.CreateAndInicialize do
+defmodule ElixirPlug.EtsHolder.CreateAndInicialize do
   @moduledoc """
-  This module will create and inicialize the ets tables with a module of
-  inicialize dates.
+  This module contains the function for create and inicialize the ets table.
+  The ets tables are configures in the configuration files.
+  ets table name and the inicialize module.
   """
-  use GenServer
+  require Logger
 
-  def start_link({name, module}) do
-    GenServer.start_link(
-      __MODULE__,
-      [name: name, module: module],
-      name: name
-    )
-  end
+  alias Sheldon.Helpers.Ets
 
-  def init(opts) do
-    create_ets_table(opts)
-    {:ok, nil}
+  def run(opts) do
+    opts
+    |> create_ets_table()
+    |> respond()
   end
 
   defp create_ets_table(opts) do
-    :ets.new(opts[:name], [:public, :named_table, :set])
+    case Ets.create(opts.name, opts.typed) do
+      {:ok, _name_ets} -> {:ok, opts}
+                 error -> error
+    end
   end
+
+  defp respond({:ok, opts}) do
+    Logger.info("Create ets table: #{inspect opts.name}")
+    :ok
+  end
+  defp respond({:error, reason}) do
+    Logger.error(reason)
+    {:error, reason}
+  end
+
 end

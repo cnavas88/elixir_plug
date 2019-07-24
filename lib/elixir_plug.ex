@@ -48,6 +48,7 @@ defmodule ElixirPlug do
   defp supervisor_ets_holder do
     case Application.get_env(:elixir_plug, :ets_tables) do
       nil -> []
+       [] -> []
         _ -> [ElixirPlug.EtsHolder.Supervisor]
     end
   end
