@@ -7,5 +7,10 @@ config :elixir_plug, ets_tables: [
     name: :cache,
     typed: :set,
     module: nil
+  },
+  %{
+    name: :example,
+    typed: :set,
+    module: :example
   }
 ]
