@@ -8,8 +8,8 @@ defmodule Sheldon.Helpers.Ets do
   def create(table, type) do
     {:ok, :ets.new(table, [:public, :named_table, type])}
   rescue
-    _e in BadArgumentException ->
-      {:error, :not_create_ets}
+    _e in ArgumentError ->
+      {:error, :ets_not_created}
   end
 
   @spec lookup(atom, String.t) :: list
@@ -38,6 +38,9 @@ defmodule Sheldon.Helpers.Ets do
 
   def insert(table, row) do
     :ets.insert(table, row)
+  rescue
+    _e in ArgumentError ->
+      {:error, :not_insert}
   end
 
   @spec first(atom) :: list

@@ -12,7 +12,7 @@ defmodule ElixirPlug.EtsHolder.Worker do
   @spec start_link(map) :: Supervisor.on_start
 
   def start_link(opts) do
-    Logger.error("> Init GenServer --> #{inspect opts.name}")
+    Logger.info("> Init GenServer --> #{inspect opts.name}")
     GenServer.start_link(
       __MODULE__,
       opts,
@@ -31,6 +31,7 @@ defmodule ElixirPlug.EtsHolder.Worker do
   def handle_continue(:ets_generate, opts) do
     case CreateAndInicialize.run(opts) do
       :ok ->
+        Logger.info("> End GenServer --> #{inspect opts.name}")
         {:noreply, opts}
 
       {:error, reason} ->

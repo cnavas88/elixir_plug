@@ -4,6 +4,6 @@ defmodule ElixirPlug.EtsHolder.Inicialize.Example do
   """
 
   def run do
-    {"hello", "world"}
+    [:error, :ok]
   end
 end

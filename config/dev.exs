@@ -11,6 +11,6 @@ config :elixir_plug, ets_tables: [
   %{
     name: :example,
     typed: :set,
-    module: :example
+    module: :Example
   }
 ]

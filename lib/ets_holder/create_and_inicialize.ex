@@ -41,12 +41,11 @@ defmodule ElixirPlug.EtsHolder.CreateAndInicialize do
   @spec run(Keyworlist) :: :ok | {:error, atom}
 
   def run(opts) do
-    opts
-    |> struct(State)
+    %State{name: opts.name, typed: opts.typed, module: opts.module}
     |> create_ets_table()
     |> module_exists()
     |> get_data_from_module()
-    |> insert_into_ets()
+    |> start_insert_into_ets()
     |> respond()
   end
 
@@ -58,8 +57,8 @@ defmodule ElixirPlug.EtsHolder.CreateAndInicialize do
         Logger.info(">>> Create ets table...")
         state
 
-      _error ->
-        %Error{state: state, reason: :dont_create_ets_table}
+      {:error, reason} ->
+        %Error{state: state, reason: reason}
     end
   end
 
@@ -84,7 +83,7 @@ defmodule ElixirPlug.EtsHolder.CreateAndInicialize do
     {:ok, generate_module(module)}
   rescue
     _e in ArgumentError ->
-      {:error, :module_doesnt_exists}
+      {:error, :module_doesnt_exist}
   end
 
   @spec generate_module(atom) :: atom
@@ -98,20 +97,53 @@ defmodule ElixirPlug.EtsHolder.CreateAndInicialize do
 
   defp get_data_from_module(%State{module: nil} = state), do: state
   defp get_data_from_module(%State{module: module} = state) do
-    %State{state | data: module.run.()}
+    %State{state | data: module.run()}
   end
   defp get_data_from_module(%Error{} = error), do: error
 
-  @spec insert_into_ets(%State{} | %Error{}) :: %State{} | %Error{}
+  @spec start_insert_into_ets(%State{} | %Error{}) :: %State{} | %Error{}
 
-  defp insert_into_ets(%State{module: nil} = state), do: state
-  defp insert_into_ets(%State{data: data, name: name} = state) do
-    Enum.each(data, fn row ->
-      state.insert_ets_fn.(name, row)
-    end)
+  defp start_insert_into_ets(%State{module: nil} = state), do: state
+  defp start_insert_into_ets(%State{data: data, name: name} = state) do
+    get_result_insert(data, name, state.insert_ets_fn)
     state
   end
-  defp insert_into_ets(%Error{} = error), do: error
+  defp start_insert_into_ets(%Error{} = error), do: error
+
+  @spec get_result_insert(list, atom, function) :: atom
+
+  defp get_result_insert(data, name, insert_fn) do
+    data
+    |> Enum.map(&insert_into_ets(&1, name, insert_fn))
+    |> Enum.filter(&filter_error/1)
+    |> see_result(length(data))
+  end
+
+  @spec insert_into_ets(list, atom, function) :: atom
+
+  defp insert_into_ets(row, name, insert_fn) do
+    case insert_fn.(name, row) do
+      true -> :ok
+      {:error, _reason} -> :error
+    end
+  end
+
+  @spec filter_error(list) :: list
+
+  defp filter_error(result), do: result == :error
+
+  @spec see_result(list, integer) :: atom
+
+  defp see_result(filter, _data) when filter == [] do
+    Logger.info(">>> Data insert OK.")
+  end
+  defp see_result(filter, length_data) do
+    if length(filter) == length_data do
+      Logger.error(">>> Data insert Error.")
+    else
+      Logger.warn(">>> Partial Data insert.")
+    end
+  end
 
   @spec respond(%State{} | %Error{}) :: :ok | {:error, atom}
 
