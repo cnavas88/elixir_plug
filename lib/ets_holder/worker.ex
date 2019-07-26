@@ -5,11 +5,14 @@ defmodule ElixirPlug.EtsHolder.Worker do
   """
   use GenServer
 
+  require Logger
+
   alias ElixirPlug.EtsHolder.CreateAndInicialize
 
   @spec start_link(map) :: Supervisor.on_start
 
   def start_link(opts) do
+    Logger.error("> Init GenServer --> #{inspect opts.name}")
     GenServer.start_link(
       __MODULE__,
       opts,
@@ -33,6 +36,13 @@ defmodule ElixirPlug.EtsHolder.Worker do
       {:error, reason} ->
         {:stop, reason, opts}
     end
+  end
+
+  @impl GenServer
+
+  def terminate(reason, _opts) do
+    Logger.error("> Terminate GenServer with error reason --> #{inspect reason}")
+    :normal
   end
 
 end
