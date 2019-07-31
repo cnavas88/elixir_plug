@@ -29,7 +29,7 @@ defmodule ElixirPlug.EtsHolder.Worker do
   @impl GenServer
 
   def handle_continue(:ets_generate, opts) do
-    case CreateAndInicialize.run(opts) do
+    case CreateAndInicialize.run(to_keyword_list(opts)) do
       :ok ->
         Logger.info("> End GenServer --> #{inspect opts.name}")
         {:noreply, opts}
@@ -46,4 +46,9 @@ defmodule ElixirPlug.EtsHolder.Worker do
     :normal
   end
 
+  # Auxiliary functions
+
+  defp to_keyword_list(dict) do
+    Enum.map(dict, fn({key, value}) -> {key, value} end)
+  end
 end

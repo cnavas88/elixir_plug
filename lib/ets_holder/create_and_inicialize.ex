@@ -41,7 +41,8 @@ defmodule ElixirPlug.EtsHolder.CreateAndInicialize do
   @spec run(Keyworlist) :: :ok | {:error, atom}
 
   def run(opts) do
-    %State{name: opts.name, typed: opts.typed, module: opts.module}
+    State
+    |> struct(opts)
     |> create_ets_table()
     |> module_exists()
     |> get_data_from_module()
