@@ -2,8 +2,11 @@ defmodule ElixirPlug.EtsHolder.Inicialize.Example do
   @moduledoc """
   Example module for inicializate the ets table :example
   """
+  alias ElixirPlug.EtsHolder.Inicialize.IInicialize
 
-  def run do
-    [:error, :ok]
-  end
+  @behaviour IInicialize
+
+  @impl IInicialize
+  def inicialize, do: [{"example", "ok"}, :error]
+
 end

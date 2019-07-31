@@ -41,7 +41,8 @@ defmodule ElixirPlug.EtsHolder.CreateAndInicialize do
   @spec run(Keyworlist) :: :ok | {:error, atom}
 
   def run(opts) do
-    %State{name: opts.name, typed: opts.typed, module: opts.module}
+    State
+    |> struct(opts)
     |> create_ets_table()
     |> module_exists()
     |> get_data_from_module()
@@ -97,7 +98,7 @@ defmodule ElixirPlug.EtsHolder.CreateAndInicialize do
 
   defp get_data_from_module(%State{module: nil} = state), do: state
   defp get_data_from_module(%State{module: module} = state) do
-    %State{state | data: module.run()}
+    %State{state | data: module.inicialize()}
   end
   defp get_data_from_module(%Error{} = error), do: error
 
