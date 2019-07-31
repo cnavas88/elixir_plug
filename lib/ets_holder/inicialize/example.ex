@@ -7,7 +7,6 @@ defmodule ElixirPlug.EtsHolder.Inicialize.Example do
   @behaviour IInicialize
 
   @impl IInicialize
-  def inicialize do
-    [{"example", "ok"}, :error]
-  end
+  def inicialize, do: [{"example", "ok"}, :error]
+
 end
