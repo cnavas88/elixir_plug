@@ -5,7 +5,7 @@ defmodule ElixirPlug.MixProject do
     [
       app: :elixir_plug,
       version: "0.1.5",
-      elixir: "~> 1.8.1-otp-21",
+      elixir: "~> 1.8",
       elixirc_paths: elixirc_paths(Mix.env),
       start_permanent: Mix.env() == :prod,
       test_coverage: [tool: ExCoveralls],
@@ -31,8 +31,6 @@ defmodule ElixirPlug.MixProject do
   defp deps do
     [
       {:credo,            "~> 1.1.0", only: [:dev, :test], runtime: false},
-      {:dialyxir,         "~> 1.0.0-rc.6", only: [:dev], runtime: false},
-      {:distillery,       "~> 2.0"},
       {:excoveralls,      "~> 0.11.1", only: :test},
       {:harakiri,         "~> 1.1"},
       {:jason,            "~> 1.1.2"},
