@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  elixir:
+    build:
+      context: .
+      dockerfile: elixir_plug.Dockerfile
+    image: elixir-plug
+    ports:
+      - '80:4001'
+    # working_dir: /elixir_plug
+    command: iex -S mix
