@@ -1,7 +1,8 @@
-PROJECT = elixir_plug
-
 build:
-	docker build -t $(PROJECT):$(VERSION) .
+	docker-compose build
 
 up:
-	docker run -d -p 80:4001 --name $(PROJECT) $(PROJECT):$(VERSION)
+	docker-compose up -d
+
+down:
+	docker-compose down

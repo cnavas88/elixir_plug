@@ -1,4 +1,7 @@
 FROM elixir:1.8.2-otp-22
+MAINTAINER cnavas88
+
+WORKDIR /elixir_plug
 
 COPY . .
 
