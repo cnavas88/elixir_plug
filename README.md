@@ -20,3 +20,8 @@ We can execute some function with harakiri:
 - logger_level: This function changes the level of logger application. The 
 options are: info, debug, error, warn. Use:
 ```echo "OPTION" PROJECT_ROUTE/tmp/loggerl_level```
+
+# For inicialize project with docker 
+
+docker build -t elixir_plug:0.0.1 .
+docker run -d -p 80:4001 --name elixir_plug elixir_plug:0.0.1
