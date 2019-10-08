@@ -38,8 +38,6 @@ defmodule ElixirPlug.MixProject do
       {:mix_test_watch,   "~> 0.8", only: [:dev, :test], runtime: false},
       {:plug_cowboy,      "~> 2.0"},
       {:plug,             "~> 1.0"},
-      {:prometheus_plugs, "~> 1.1.5"},
-      {:prometheus_ex,    "~> 3.0"},
       {:observer_cli,     "~> 1.4"}
     ]
   end

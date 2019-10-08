@@ -10,8 +10,6 @@ defmodule ElixirPlug.Web.Router do
   plug(Plug.Logger)
 
   plug(:match)
-  plug ElixirPlug.Web.MetricsInstrumenter
-  plug ElixirPlug.Web.MetricsExporter
   plug(:dispatch)
 
   forward "/api", to: ElixirPlug.Web.ApiRouter

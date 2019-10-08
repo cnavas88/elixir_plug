@@ -6,20 +6,12 @@ defmodule ElixirPlug do
 
   require Logger
 
-  alias ElixirPlug.Metrics
-  alias ElixirPlug.Web.Controllers.VersionController
-  alias ElixirPlug.Web.{MetricsExporter, MetricsInstrumenter, Router}
+  alias ElixirPlug.Web.Router
   alias Plug.Cowboy
 
   def start(_type, _args) do
 
     tmp_path = Application.get_env(:elixir_plug, :tmp_path)
-
-    Metrics.setup()
-    MetricsExporter.setup()
-    MetricsInstrumenter.setup()
-
-    Metrics.inc(:version, [labels: [VersionController.get_commit_version()]])
 
     Harakiri.add(%{
       paths: ["#{tmp_path}/restart"],
