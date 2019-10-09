@@ -51,9 +51,10 @@ defmodule ElixirPlug.MixProject do
       {:jason, "~> 1.1.2"},
       {:litmus, "~> 1.0.0"},
       {:mix_test_watch, "~> 0.8", only: [:dev, :test], runtime: false},
+      {:observer_cli, "~> 1.4"},
       {:plug_cowboy, "~> 2.0"},
       {:plug, "~> 1.0"},
-      {:observer_cli, "~> 1.4"}
+      {:telemetry, "~> 0.4.0"}
     ]
   end
 end

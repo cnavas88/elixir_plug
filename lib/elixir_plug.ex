@@ -6,6 +6,7 @@ defmodule ElixirPlug do
 
   require Logger
 
+  # alias ElixirPlug.Instrumenter
   alias ElixirPlug.Web.Router
   alias Plug.Cowboy
 
@@ -21,6 +22,8 @@ defmodule ElixirPlug do
       paths: ["#{tmp_path}/logger_level"],
       action: &set_logger_level/1
     })
+
+    # Instrumenter.setup()
 
     children =
       supervisor_ets_holder() ++
