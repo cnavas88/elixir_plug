@@ -3,7 +3,7 @@ defmodule Sheldon.Helpers.Ets do
   Ets Helpers
   """
 
-  @spec create(atom, atom) :: :ok
+  @spec create(atom, atom) :: {:error, :ets_not_created} | {:ok, atom()}
 
   def create(table, type) do
     {:ok, :ets.new(table, [:public, :named_table, type])}
@@ -12,7 +12,7 @@ defmodule Sheldon.Helpers.Ets do
       {:error, :ets_not_created}
   end
 
-  @spec lookup(atom, String.t()) :: list
+  @spec lookup(atom, String.t()) :: :none | {:ok, tuple()}
 
   def lookup(ets_table, key) do
     case :ets.lookup(ets_table, key) do

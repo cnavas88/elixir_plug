@@ -38,7 +38,7 @@ defmodule ElixirPlug.EtsHolder.CreateAndInicialize do
     ]
   end
 
-  @spec run(Keyworlist) :: :ok | {:error, atom}
+  @spec run([any]) :: :ok | {:error, atom}
 
   def run(opts) do
     State
@@ -158,7 +158,5 @@ defmodule ElixirPlug.EtsHolder.CreateAndInicialize do
 
   defp respond(%State{} = _state), do: :ok
 
-  defp respond(%Error{reason: reason} = _error) do
-    {:error, reason}
-  end
+  defp respond(%Error{reason: reason} = _error), do: {:error, reason}
 end
