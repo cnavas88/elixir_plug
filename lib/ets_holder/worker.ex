@@ -9,10 +9,11 @@ defmodule ElixirPlug.EtsHolder.Worker do
 
   alias ElixirPlug.EtsHolder.CreateAndInicialize
 
-  @spec start_link(map) :: Supervisor.on_start
+  @spec start_link(map) :: Supervisor.on_start()
 
   def start_link(opts) do
-    Logger.info("> Init GenServer --> #{inspect opts.name}")
+    Logger.info("> Init GenServer --> #{inspect(opts.name)}")
+
     GenServer.start_link(
       __MODULE__,
       opts,
@@ -31,7 +32,7 @@ defmodule ElixirPlug.EtsHolder.Worker do
   def handle_continue(:ets_generate, opts) do
     case CreateAndInicialize.run(to_keyword_list(opts)) do
       :ok ->
-        Logger.info("> End GenServer --> #{inspect opts.name}")
+        Logger.info("> End GenServer --> #{inspect(opts.name)}")
         {:noreply, opts}
 
       {:error, reason} ->
@@ -42,13 +43,13 @@ defmodule ElixirPlug.EtsHolder.Worker do
   @impl GenServer
 
   def terminate(reason, _opts) do
-    Logger.error("> Terminate GenServer with error reason --> #{inspect reason}")
+    Logger.error("> Terminate GenServer with error reason --> #{inspect(reason)}")
     :normal
   end
 
   # Auxiliary functions
 
   defp to_keyword_list(dict) do
-    Enum.map(dict, fn({key, value}) -> {key, value} end)
+    Enum.map(dict, fn {key, value} -> {key, value} end)
   end
 end

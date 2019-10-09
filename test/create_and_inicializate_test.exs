@@ -67,7 +67,7 @@ defmodule CreateAndInicializateTest do
 
     insert_ets_fn = fn _, data ->
       case data do
-        :error      -> {:error, :not_insert}
+        :error -> {:error, :not_insert}
         {:ok, "ok"} -> true
       end
     end
@@ -91,7 +91,7 @@ defmodule CreateAndInicializateTest do
 
     insert_ets_fn = fn _, data ->
       case data do
-        :error      -> {:error, :not_insert}
+        :error -> {:error, :not_insert}
         {:ok, "ok"} -> true
       end
     end
@@ -115,7 +115,7 @@ defmodule CreateAndInicializateTest do
 
     insert_ets_fn = fn _, data ->
       case data do
-        :error      -> {:error, :not_insert}
+        :error -> {:error, :not_insert}
         {:ok, "ok"} -> true
       end
     end
@@ -131,5 +131,4 @@ defmodule CreateAndInicializateTest do
     result = CreateAndInicialize.run(opts)
     assert result == :ok
   end
-
 end

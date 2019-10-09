@@ -12,13 +12,13 @@ defmodule Sheldon.Helpers.Ets do
       {:error, :ets_not_created}
   end
 
-  @spec lookup(atom, String.t) :: list
+  @spec lookup(atom, String.t()) :: list
 
   def lookup(ets_table, key) do
     case :ets.lookup(ets_table, key) do
-      []                -> :none
-      [{_, 0}]          -> :none
-      [{_, ets_data}]  -> {:ok, ets_data}
+      [] -> :none
+      [{_, 0}] -> :none
+      [{_, ets_data}] -> {:ok, ets_data}
     end
   end
 
@@ -49,10 +49,9 @@ defmodule Sheldon.Helpers.Ets do
     :ets.first(table)
   end
 
-  @spec next(atom, String.t) :: list
+  @spec next(atom, String.t()) :: list
 
   def next(table, current_key) do
     :ets.next(table, current_key)
   end
-
 end

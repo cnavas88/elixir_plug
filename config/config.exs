@@ -8,11 +8,11 @@ config :logger, :console,
   format: "$date $time $metadata[$level] $message\n",
   metadata: [:request_id]
 
-if Mix.env == :dev do
+if Mix.env() == :dev do
   config :mix_test_watch,
     tasks: [
       "test --cover",
-      "credo --strict",
+      "credo --strict"
     ]
 end
 

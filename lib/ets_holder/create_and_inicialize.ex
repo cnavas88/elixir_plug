@@ -66,8 +66,10 @@ defmodule ElixirPlug.EtsHolder.CreateAndInicialize do
   @spec module_exists(%State{} | %Error{}) :: %State{} | %Error{}
 
   defp module_exists(%State{module: nil} = state), do: state
+
   defp module_exists(%State{module: module} = state) do
     Logger.info(">>> Inicialize ets table...")
+
     case exists_and_get_module(module) do
       {:ok, existing_module} ->
         %State{state | module: existing_module}
@@ -76,6 +78,7 @@ defmodule ElixirPlug.EtsHolder.CreateAndInicialize do
         %Error{state: state, reason: reason}
     end
   end
+
   defp module_exists(%Error{} = error), do: error
 
   @spec exists_and_get_module(atom) :: {:ok, atom} | {:error, atom}
@@ -90,25 +93,29 @@ defmodule ElixirPlug.EtsHolder.CreateAndInicialize do
   @spec generate_module(atom) :: atom
 
   defp generate_module(module) do
-    to_string(@module_inicialize_ets) <> "." <> Atom.to_string(module)
+    (to_string(@module_inicialize_ets) <> "." <> Atom.to_string(module))
     |> String.to_existing_atom()
   end
 
   @spec get_data_from_module(%State{} | %Error{}) :: %State{} | %Error{}
 
   defp get_data_from_module(%State{module: nil} = state), do: state
+
   defp get_data_from_module(%State{module: module} = state) do
     %State{state | data: module.inicialize()}
   end
+
   defp get_data_from_module(%Error{} = error), do: error
 
   @spec start_insert_into_ets(%State{} | %Error{}) :: %State{} | %Error{}
 
   defp start_insert_into_ets(%State{module: nil} = state), do: state
+
   defp start_insert_into_ets(%State{data: data, name: name} = state) do
     get_result_insert(data, name, state.insert_ets_fn)
     state
   end
+
   defp start_insert_into_ets(%Error{} = error), do: error
 
   @spec get_result_insert(list, atom, function) :: atom
@@ -129,7 +136,7 @@ defmodule ElixirPlug.EtsHolder.CreateAndInicialize do
     end
   end
 
-  @spec filter_error(list) :: list
+  @spec filter_error(list) :: boolean
 
   defp filter_error(result), do: result == :error
 
@@ -138,6 +145,7 @@ defmodule ElixirPlug.EtsHolder.CreateAndInicialize do
   defp see_result(filter, _data) when filter == [] do
     Logger.info(">>> Data insert OK.")
   end
+
   defp see_result(filter, length_data) do
     if length(filter) == length_data do
       Logger.error(">>> Data insert Error.")
@@ -149,8 +157,8 @@ defmodule ElixirPlug.EtsHolder.CreateAndInicialize do
   @spec respond(%State{} | %Error{}) :: :ok | {:error, atom}
 
   defp respond(%State{} = _state), do: :ok
+
   defp respond(%Error{reason: reason} = _error) do
     {:error, reason}
   end
-
 end

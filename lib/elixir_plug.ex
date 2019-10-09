@@ -10,7 +10,6 @@ defmodule ElixirPlug do
   alias Plug.Cowboy
 
   def start(_type, _args) do
-
     tmp_path = Application.get_env(:elixir_plug, :tmp_path)
 
     Harakiri.add(%{
@@ -25,13 +24,13 @@ defmodule ElixirPlug do
 
     children =
       supervisor_ets_holder() ++
-      [
-        Cowboy.child_spec(
-          scheme: :http,
-          plug: Router,
-          options: [port: Application.get_env(:elixir_plug, :port)]
-        )
-      ]
+        [
+          Cowboy.child_spec(
+            scheme: :http,
+            plug: Router,
+            options: [port: Application.get_env(:elixir_plug, :port)]
+          )
+        ]
 
     opts = [strategy: :one_for_one, name: ElixirPlug.Supervisor]
     Supervisor.start_link(children, opts)
@@ -40,8 +39,8 @@ defmodule ElixirPlug do
   defp supervisor_ets_holder do
     case Application.get_env(:elixir_plug, :ets_tables) do
       nil -> []
-       [] -> []
-        _ -> [ElixirPlug.EtsHolder.Supervisor]
+      [] -> []
+      _ -> [ElixirPlug.EtsHolder.Supervisor]
     end
   end
 
