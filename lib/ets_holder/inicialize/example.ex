@@ -8,5 +8,4 @@ defmodule ElixirPlug.EtsHolder.Inicialize.Example do
 
   @impl IInicialize
   def inicialize, do: [{"example", "ok"}, :error]
-
 end

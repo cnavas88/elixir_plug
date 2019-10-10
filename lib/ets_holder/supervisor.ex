@@ -22,7 +22,8 @@ defmodule ElixirPlug.EtsHolder.Supervisor do
       worker(
         ElixirPlug.EtsHolder.Worker,
         [config],
-        [restart: :permanent, id: config.name]
+        restart: :permanent,
+        id: config.name
       )
     end)
   end
