@@ -6,27 +6,19 @@ defmodule ElixirPlug.EtsHolder.CreateAndInicialize do
   """
   require Logger
 
+  alias __MODULE__, as: State
   alias Sheldon.Helpers.Ets
 
   @module_inicialize_ets ElixirPlug.EtsHolder.Inicialize
 
-  defmodule State do
-    @moduledoc """
-    State with the most important dates for create and inicializate ets tables
-    - name: name of table.
-    - typed: typed of ets table.
-    - module: module for call to inicializate dates.
-    - data: inicializate data.
-    """
-    defstruct [
-      :name,
-      :typed,
-      :module,
-      :data,
-      create_ets_fn: &Ets.create/2,
-      insert_ets_fn: &Ets.insert/2
-    ]
-  end
+  defstruct [
+    :name,
+    :typed,
+    :module,
+    :data,
+    create_ets_fn: &Ets.create/2,
+    insert_ets_fn: &Ets.insert/2
+  ]
 
   defmodule Error do
     @moduledoc """

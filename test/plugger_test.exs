@@ -52,20 +52,20 @@ defmodule ElixirPlugTest do
     assert conn.status == 404
   end
 
-  test "returns some metrics" do
-    # Create a test connection
-    conn = conn(:get, "/metrics")
+  # test "returns some metrics" do
+  #   # Create a test connection
+  #   conn = conn(:get, "/metrics")
 
-    # Invoke the plug
-    conn = Router.call(conn, @opts)
+  #   # Invoke the plug
+  #   conn = Router.call(conn, @opts)
 
-    # Assert the response and status
-    assert conn.state == :sent
-    assert conn.status == 200
+  #   # Assert the response and status
+  #   assert conn.state == :sent
+  #   assert conn.status == 200
 
-    # Assert contains at least 'http_requests_total' metric
-    assert String.contains?(conn.resp_body, "http_requests_total")
-  end
+  #   # Assert contains at least 'http_requests_total' metric
+  #   assert String.contains?(conn.resp_body, "http_requests_total")
+  # end
 
   test "responds 404 to not found" do
     # Create a test connection
